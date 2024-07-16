@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Upload an Image</h2>
+    <form action="${process.env.REACT_APP_BASE_API_URL}/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="text" name="name">
+        <button type="submit">Upload File</button>
+    </form>
+    <script>
+        async function getFiles() {
+            try {
+                var response = await fetch("${process.env.REACT_APP_BASE_API_URL}/getFiles", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log(data);
+            }
+            catch (err) {
+                console.error('Error:', err);
+            }
+        }
+
+        getFiles();
+    </script>
+</body>
+
+</html>
